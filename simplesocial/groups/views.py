@@ -40,11 +40,11 @@ class LeaveGroup(LoginRequiredMixin, RedirectView):
 
     def get(self, request, *args, **kwargs):
         try:
-            membership = models.Groupmember.objects.filter(
+            membership = GroupMember.objects.filter(
                 user=self.request.user,
                 group__slug=self.kwargs.get('slug')
             ).get()
-        except models.GroupMember.DoesNotExist:
+        except GroupMember.DoesNotExist:
             messages.warning(self.request, "You can't leave this group because you are not in it")
         else:
             membership.delete()
